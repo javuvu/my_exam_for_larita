@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Resultados</h2>
+    <p>Has acertado {{ score }} de {{ total }}.</p>
+    <ol>
+        {% for r in results %}
+            <li>
+                <strong>{{ r.question }}</strong><br>
+                Tu respuesta: {{ r.selected }} — Correcta: {{ r.correct }}<br>
+                <small>
+                    A: {{ r.choices.a }} | B: {{ r.choices.b }} | C: {{ r.choices.c }} | D: {{ r.choices.d }}
+                </small>
+            </li>
+        {% endfor %}
+    </ol>
+    <p><a href="/templates/exam.html">Hacer otro examen</a></p>
+{% endblock %}

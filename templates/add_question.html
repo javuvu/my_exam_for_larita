@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Añadir pregunta</h2>
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+    
+    <form method="post">
+        <label>Pregunta:<br>
+            <textarea name="question" rows="3" required></textarea><br>
+        </label>
+        <label>Opción A:<input type="text" name="a" required></label>
+        <label><br>Opción B:<input type="text" name="b" required></label>
+        <label><br>Opción C:<input type="text" name="c" required></label>
+        <label><br>Opción D:<input type="text" name="d" required></label>
+
+        <label><br>Etiquetas (separadas por comas):
+            <input type="text" name="tags" placeholder="general, tema 1, tema 2">
+        </label>
+        
+        <label><br>Respuesta correcta:
+            <select name="correct" required>
+                <option value="">--Selecciona--</option>
+                <option value="a">A</option>
+                <option value="b">B</option>
+                <option value="c">C</option>
+                <option value="d">D</option>
+            </select>
+        </label>
+        <p><button type="submit">Guardar pregunta</button></p>
+    </form>
+{% endblock %}

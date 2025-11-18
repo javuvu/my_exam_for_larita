@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Preguntas guardadas</h2>
+    {% if questions|length == 0 %}
+        <p>No hay preguntas todavía.</p>
+    {% else %}
+        <ol>
+            {% for q in questions %}
+                <li>
+                    <strong>{{ q['question'] }}</strong><br>
+                    A: {{ q['a'] }} | B: {{ q['b'] }} | C: {{ q['c'] }} | D: {{ q['d'] }}
+                </li>
+            {% endfor %}
+        </ol>
+    {% endif %}
+{% endblock %}

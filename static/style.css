@@ -1,0 +1,14 @@
+/*
+
+body { font-family: Arial, sans-serif; background:#f7f7f7; color:#222; }
+.container{ max-width:900px; margin:20px auto; background:white; padding:18px; border-radius:8px; box-shadow:0 4px 10px rgba(0,0,0,0.05);}
+header h1{ margin:0 }
+nav{ margin-top:6px; margin-bottom:12px }
+label{ display:block; margin:8px 0 }
+textarea{ width:100% }
+.error{ color:crimson }
+button{ padding:8px 12px; border-radius:6px; border:0; background:#2b7cff; color:white }
+fieldset{ margin-bottom:10px; padding:10px }
+footer{ margin-top:18px; font-size:0.9em; color:#666 }
+
+*/
