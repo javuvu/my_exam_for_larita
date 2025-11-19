@@ -90,9 +90,26 @@ def add_question():
 @app.route('/templates/list_questions.html')
 def list_questions():
     conn = get_db()
-    cur = conn.execute('SELECT * FROM questions ORDER BY id DESC')
+    tag = request.args.get('tag', None)
+    if tag:
+        cur = conn.execute('SELECT * FROM questions WHERE tags LIKE ? ORDER BY id DESC', (f'%{tag}%',))
+    else:
+        cur = conn.execute('SELECT * FROM questions ORDER BY id DESC')
     qs = cur.fetchall()
-    return render_template('list_questions.html', questions=qs)
+    # fetch distinct tags
+    cur_tags = conn.execute("SELECT DISTINCT tags FROM questions WHERE tags IS NOT NULL AND tags!=''")
+    all_tags = cur_tags.fetchall()
+    return render_template('list_questions.html', questions=qs, tags=all_tags, selected_tag=tag)
+
+# Delete question
+@app.route('/delete/<int:qid>', methods=['POST'])
+def delete_question(qid):
+    conn = get_db()
+    conn.execute('DELETE FROM questions WHERE id = ?', (qid,))
+    conn.commit()
+    return redirect(url_for('list_questions'))
+
+
 
 # Start an exam (choose number of questions)
 @app.route('/templates/exam.html', methods=['GET', 'POST'])
