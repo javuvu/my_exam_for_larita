@@ -5,11 +5,11 @@
 
     <h3>Categorías:</h3>
     <ul>
-        <li><a href="/questions">Todas</a></li>
+        <li><a href="/templates/list_questions.html">Todas</a></li>
         {% for t in tags %}
             {% if t.tags %}
                 {% for single in t.tags.split(',') %}
-                    <li><a href="/questions?tag={{ single.strip() }}">{{ single.strip() }}</a></li>
+                    <li><a href="/templates/list_questions.html?tag={{ single.strip() }}">{{ single.strip() }}</a></li>
                 {% endfor %}
             {% endif %}
         {% endfor %}
@@ -22,7 +22,7 @@
             {% for q in questions %}
                 <li>
                     <strong>{{ q['question'] }}</strong><br>
-                    A: {{ q['a'] }} | B: {{ q['b'] }} | C: {{ q['c'] }} | D: {{ q['d'] }}<br>
+                    a) {{ q['a'] }} <br> b) {{ q['b'] }} <br> c) {{ q['c'] }} <br> d) {{ q['d'] }}<br>
                     <small>Etiquetas: {{ q['tags'] }}</small><br>
                     <form method="post" action="/delete/{{ q['id'] }}" onsubmit="return confirm('¿Eliminar esta pregunta?');">
                         <button type="submit">Eliminar</button>
