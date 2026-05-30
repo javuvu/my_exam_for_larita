@@ -91,15 +91,31 @@ def add_question():
 def list_questions():
     conn = get_db()
     tag = request.args.get('tag', None)
+    qtext = request.args.get('q')
+
+    query = 'SELECT * FROM questions WHERE 1=1'
+    params = []
+
     if tag:
-        cur = conn.execute('SELECT * FROM questions WHERE tags LIKE ? ORDER BY id DESC', (f'%{tag}%',))
-    else:
-        cur = conn.execute('SELECT * FROM questions ORDER BY id DESC')
+        #cur = conn.execute('SELECT * FROM questions WHERE tags LIKE ? ORDER BY id DESC', (f'%{tag}%',))
+        query += ' AND tags LIKE ?'
+        params.append(f'%{tag}')
+
+    if qtext:
+        query += ' AND tags LIKE ?'
+        params.append(f'%{qtext}')
+
+    #else:
+        #cur = conn.execute('SELECT * FROM questions ORDER BY id DESC')
+    
+    query += ' ORDER BY id DESC'
+    cur = conn.execute(query, params)
     qs = cur.fetchall()
+    
     # fetch distinct tags
     cur_tags = conn.execute("SELECT DISTINCT tags FROM questions WHERE tags IS NOT NULL AND tags!=''")
     all_tags = cur_tags.fetchall()
-    return render_template('list_questions.html', questions=qs, tags=all_tags, selected_tag=tag)
+    return render_template('list_questions.html', questions=qs, tags=all_tags, selected_tag=tag, qtext=qtext)
 
 # Delete question
 @app.route('/delete/<int:qid>', methods=['POST'])
@@ -109,7 +125,34 @@ def delete_question(qid):
     conn.commit()
     return redirect(url_for('list_questions'))
 
+# Edit question
+@app.route('/edit/<int:qid>', methods=['GET', 'POST'])
+def edit_question(qid):
+    conn = get_db()
+    if request.method == 'POST':
+        q = request.form['question']
+        a = request.form['a']
+        b = request.form['b']
+        c = request.form['c']
+        d = request.form['d']
+        correct = request.form['correct']
+        tags = request.form.get('tags','')
+        conn.execute('''UPDATE questions SET question=?, a=?, b=?, c=?, d=?, correct=?, tags=? WHERE id=?''',
+        (q,a,b,c,d,correct,tags,qid))
+        conn.commit()
+        return redirect(url_for('list_questions'))
 
+    cur = conn.execute('SELECT * FROM questions WHERE id=?', (qid,))
+    qrow = cur.fetchone()
+    return render_template('edit_question.html', q=qrow)
+
+# Exam stats
+@app.route('/templates/stats.html')
+def stats():
+    conn = get_db()
+    cur = conn.execute('SELECT COUNT(*) as total FROM questions')
+    total_q = cur.fetchone()['total']
+    return render_template('stats.html', total_q=total_q)
 
 # Start an exam (choose number of questions)
 @app.route('/templates/exam.html', methods=['GET', 'POST'])

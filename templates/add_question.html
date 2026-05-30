@@ -7,21 +7,78 @@
     {% endif %}
     
     <form method="post">
-        <label>Pregunta:<br>
+        <!--<label>Pregunta:<br>
             <textarea name="question" rows="3" required></textarea><br>
-        </label>
-        <label>Opción A:<input type="text" name="a" required></label>
-        <label><br>Opción B:<input type="text" name="b" required></label>
+        </label>-->
+        <!--<label>Opción A:<input type="text" name="a" required></label>-->
+
+        <style>
+            .input-grande {
+                width: 60%; /* Para el ancho de la caja de texto */
+                padding: 15px; /* Margen interno */
+                font-size: 1rem; /* Tamaño del texto de dentro */
+                margin-top: 10px; /* Margen por arriba */
+                margin-bottom: 10px; /* Margen por debajo */
+                box-sizing: border-box; /* Asegura que el padding no rompa el diseño */
+            }
+        </style>
+
+        <style>
+            .contenedor{
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
+
+            .cajita-grande {
+                width: 80%;
+                height: 100px;
+                padding: 12px;
+                border: 2px solid #ccc;
+                border-radius: 8px; /* Bordes redondeados */
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 16px;
+                background-color: #f9f9f9;
+                box-sizing: border-box; /* Para que el padding no agrande el ancho total */
+            }
+        </style>
+
+        <div class="contenedor">
+            <label>Escribe la pregunta:<br></label>
+            <textarea class="cajita-grande" name="question" required></textarea>
+        </div>
+
+        <div class="contenedor">
+            <label>Opción A:<br></label>
+            <textarea class="cajita-grande" name="a" required></textarea>
+        </div>
+
+        <div class="contenedor">
+            <label>Opción B:<br></label>
+            <textarea class="cajita-grande" name="b" required></textarea>
+        </div>
+
+        <div class="contenedor">
+            <label>Opción C:<br></label>
+            <textarea class="cajita-grande" name="c" required></textarea>
+        </div>
+
+        <div class="contenedor">
+            <label>Opción D:<br></label>
+            <textarea class="cajita-grande" name="d" required></textarea>
+        </div>
+        
+
+        <!--<label><br>Opción B:<input type="text" name="b" required></label>
         <label><br>Opción C:<input type="text" name="c" required></label>
-        <label><br>Opción D:<input type="text" name="d" required></label>
+        <label><br>Opción D:<input type="text" name="d" required></label>-->
 
         <label><br>Etiquetas (separadas por comas):
-            <input type="text" name="tags" placeholder="general, tema 1, tema 2">
+            <input type="text" name="tags" placeholder="tema 1 gen, tema 2 esp, tema 3 esp">
         </label>
         
         <label><br>Respuesta correcta:
             <select name="correct" required>
-                <option value="">--Selecciona--</option>
+                <option value="">--Selecciona la correcta, princesa--</option>
                 <option value="a">A</option>
                 <option value="b">B</option>
                 <option value="c">C</option>
